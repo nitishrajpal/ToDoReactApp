@@ -9,12 +9,6 @@ class AddToDo extends Component {
         Status: "Pending"
     };
 
-    idChangedHandler = (event) => {
-        this.setState({
-            Id: event.target.value
-        });
-    };
-
     titleChangedHandler = (event) => {
         this.setState({
             Title: event.target.value
@@ -48,10 +42,6 @@ class AddToDo extends Component {
         if(this.props.show){
             showAddForm = (
                 <form onSubmit={this.onSubmitHandler}>
-                    <div className="form-group">
-                        <label>Id</label>
-                        <input type="number" value={this.state.Id} onChange={this.idChangedHandler} className="form-control" placeholder="Enter unique Id" />
-                    </div>
                     <div className="form-group">
                         <label>Title</label>
                         <input type="text" value={this.state.Title} onChange={this.titleChangedHandler} className="form-control" placeholder="Enter Title" />

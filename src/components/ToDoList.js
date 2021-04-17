@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './ToDoList.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddToDo from './AddToDo';
@@ -6,17 +7,33 @@ import AddToDo from './AddToDo';
 class ToDoList extends Component {
 
     state = {
-        todos: [
-            { Id: '1', Title: 'Push code to github', Status: 'Done' },
-            { Id: '2', Title: 'Email to manager', Status: 'Pending' }
-        ],
+        todos: [],
         showForm: false
     };
 
-    onDeleteHandler = (id) => {
-        const filteredItems = this.state.todos.filter( item =>  item.Id !== id  );
+    componentDidMount(){
+        axios.get('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json')
+        .then(res => {
+            const fetchedTodos = [...this.state.todos];
+            for(let key in res.data){
+                fetchedTodos.push({
+                    ...res.data[key],
+                    Id: key
+                });
+            };
+            // console.log(fetchedTodos);
+            this.setState({todos: fetchedTodos});
+        })
+    }
 
-        this.setState({ todos: filteredItems });
+    onDeleteHandler = (id) => {
+
+        axios.delete(`https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos/${id}.json`)
+        .then(res=>{
+            const filteredItems = this.state.todos.filter( item =>  item.Id !== id  );
+
+            this.setState({ todos: filteredItems });
+        });
     }
 
     onEditHandler = (id) => {
@@ -37,9 +54,15 @@ class ToDoList extends Component {
     }
 
     onAddHandler = (data) => {
-        this.setState({ 
-            todos: [...this.state.todos, data]
-        });
+        // console.log(data);
+        axios.post('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json', data)
+        .then(res => {
+            data.Id = res.data.name;
+            this.setState({ 
+                todos: [...this.state.todos, data]
+            });
+            //console.log(this.state);
+        })
     };
 
     showFormHandler = () => {
@@ -58,7 +81,6 @@ class ToDoList extends Component {
                 <table className="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Title</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -68,7 +90,6 @@ class ToDoList extends Component {
                         {this.state.todos.map(item => {
                             return (
                                 <tr key={item.Id}>
-                                   <td>{item.Id}</td>
                                    <td>{item.Title}</td> 
                                    <td style={ item.Status === "Pending" ? { color: 'red', fontWeight: 'bold'} : { color: 'green', fontWeight: 'bold' } }>{item.Status}</td> 
                                    <td>
