@@ -64,34 +64,6 @@ class ToDoList extends Component {
                 }
             })
         }));
-
-        // for(let key in this.state.todos){
-        //     if(key.Id === id){
-        //         let updatedToDo = { ...this.state.todos[key], Status: this.state.todos[key].Status === "Pending" ? "Done" : "Pending" };
-        //         axios.put(`https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos/${id}.json`, updatedToDo)
-        //         .then(res =>{
-        //             console.log(res.data);
-        //             var updatedToDos = [...this.state.todos, updatedToDo];
-        //             this.setState({ todos: updatedToDos });
-        //         });
-        //     }
-        // }
-
-
-        // this.setState(state => ({
-        //     ...state,
-        //     todos: state.todos.map( todo => {
-        //         if( todo.Id === id){
-        //             return {
-        //                 ...todo,
-        //                 Status: todo.Status === "Pending" ? "Done" : "Pending"
-        //             }
-        //         }
-        //         else{
-        //             return todo;
-        //         }
-        //     })
-        // }));
     }
 
     onAddHandler = (data) => {
