@@ -21,7 +21,6 @@ class ToDoList extends Component {
                     Id: key
                 });
             };
-            // console.log(fetchedTodos);
             this.setState({todos: fetchedTodos});
         })
     }
@@ -43,9 +42,7 @@ class ToDoList extends Component {
             if(todo.Id === id){
                 updatedToDo = { ...todo, Status: todo.Status === "Pending" ? "Done" : "Pending" };
                 axios.put(`https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos/${id}.json`, updatedToDo)
-                .then(res =>{
-                    console.log(res.data);
-                });
+                .then(res =>{});
             }
             return updatedToDo;
         });
@@ -67,19 +64,17 @@ class ToDoList extends Component {
     }
 
     onAddHandler = (data) => {
-        // console.log(data);
         axios.post('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json', data)
         .then(res => {
             data.Id = res.data.name;
             this.setState({ 
                 todos: [...this.state.todos, data]
             });
-            //console.log(this.state);
         })
     };
 
     showFormHandler = () => {
-        this.setState({ showForm: true });
+        this.setState({ showForm: !this.state.showForm });
     };
 
     closeFormHandler = () => {
