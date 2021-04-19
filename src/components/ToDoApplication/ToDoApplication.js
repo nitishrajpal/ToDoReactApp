@@ -7,17 +7,10 @@ import './ToDoApplication.css';
 
 class TodoApplication extends Component {
 
-    state = {
-        todos: []
-    };
-
     onAddHandler = (data) => {
         axios.post('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json', data)
         .then(res => {
             data.Id = res.data.name;
-            this.setState({ 
-                todos: [...this.state.todos, data]
-            });
         })
     };
 
@@ -33,7 +26,7 @@ class TodoApplication extends Component {
                         </ul>
                     </nav>
                 </header>
-                <Route path="/" exact component={() => <ToDoList addNew={this.state.todos} />} />
+                <Route path="/" exact component={ToDoList} />
                 <Route path="/newTodo" component={() => <AddToDo onAdd={this.onAddHandler} />} />
             </div>
         );
