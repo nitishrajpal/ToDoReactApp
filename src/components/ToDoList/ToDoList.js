@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './ToDoList.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AddToDo from './AddToDo';
+import AddToDo from '../AddToDo/AddToDo';
+import { Route } from 'react-router-dom';
 
 class ToDoList extends Component {
 
     state = {
-        todos: [],
-        showForm: false
+        todos: []
     };
 
     componentDidMount(){
+        //console.log(this.props);
+        // if(this.props.addNew){
+        //     this.setState({ todos: [...this.state.todos, this.props.addNew] });
+        // }
         axios.get('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json')
         .then(res => {
             const fetchedTodos = [...this.state.todos];
@@ -63,29 +67,18 @@ class ToDoList extends Component {
         }));
     }
 
-    onAddHandler = (data) => {
-        axios.post('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json', data)
-        .then(res => {
-            data.Id = res.data.name;
-            this.setState({ 
-                todos: [...this.state.todos, data]
-            });
-        })
-    };
+    // showFormHandler = () => {
+    //     this.setState({ showForm: !this.state.showForm });
+    // };
 
-    showFormHandler = () => {
-        this.setState({ showForm: !this.state.showForm });
-    };
-
-    closeFormHandler = () => {
-        this.setState({ showForm: false });
-    }
+    // closeFormHandler = () => {
+    //     this.setState({ showForm: false });
+    // }
 
     render() {
         return(
             <div>
-                <h1>To Do List</h1>
-                <button type="button" className="btn-primary" onClick={this.showFormHandler}>Add To Do</button>
+                {/* <button type="button" className="btn-primary" onClick={this.showFormHandler}>Add To Do</button> */}
                 <table className="table">
                     <thead>
                     <tr>
@@ -117,7 +110,8 @@ class ToDoList extends Component {
                         })}
                     </tbody>
                 </table>
-                <AddToDo show={this.state.showForm} close={this.closeFormHandler} onAdd = { this.onAddHandler }/>
+                {/* <AddToDo show={this.state.showForm} close={this.closeFormHandler} onAdd = { this.onAddHandler }/> */}
+                <Route path="/newToDo" component={ () => <AddToDo show={this.state.showForm} close={this.closeFormHandler} onAdd = { this.onAddHandler }/> } />
             </div>
         );
     }

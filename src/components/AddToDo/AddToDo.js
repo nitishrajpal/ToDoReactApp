@@ -9,6 +9,10 @@ class AddToDo extends Component {
         Status: "Pending"
     };
 
+    // componentDidMount(){
+    //     console.log(this.props);
+    // }
+
     titleChangedHandler = (event) => {
         this.setState({
             Title: event.target.value
@@ -38,9 +42,8 @@ class AddToDo extends Component {
 
     render() {
 
-        let showAddForm = null;
-        if(this.props.show){
-            showAddForm = (
+        //let showAddForm = null;
+           let showAddForm = (
                 <form onSubmit={this.onSubmitHandler}>
                     <div className="form-group">
                         <label>Title</label>
@@ -57,7 +60,6 @@ class AddToDo extends Component {
                     <button type="button" id="closeForm" onClick={this.props.close} className="form-control btn btn-primary">Done</button>
                 </form>
             );
-        }
 
         return(
             <div>
