@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './AddToDo.css'
 
 class AddToDo extends Component {
@@ -6,7 +7,8 @@ class AddToDo extends Component {
     state = {
         Id: "",
         Title: "",
-        Status: "Pending"
+        Status: "Pending",
+        showSuccessMessage: false
     };
 
     titleChangedHandler = (event) => {
@@ -23,11 +25,13 @@ class AddToDo extends Component {
 
     onSubmitHandler = (event) => {
         event.preventDefault();
-        this.props.onAdd({
-            Id: this.state.Id,
-            Title: this.state.Title,
-            Status: this.state.Status
-        });
+        axios.post('https://todoreactapp-a410d-default-rtdb.firebaseio.com/todos.json', this.state)
+        .then(res => {
+            this.setState({ Id: res.data.name, showSuccessMessage: true })
+            setTimeout(()=>{
+                this.setState({ showSuccessMessage: false })
+            }, 2000);
+        })
 
         this.setState({
             Id: "",
@@ -37,8 +41,18 @@ class AddToDo extends Component {
     };
 
     render() {
+
+        let successMessage = null;
+        if(this.state.showSuccessMessage){
+            successMessage = (
+                <div className="alert alert-success" role="alert">
+                    Task added Successfully!
+                </div>
+            );
+        }
         return(
             <div>
+                {successMessage}
                 <form onSubmit={this.onSubmitHandler}>
                     <div className="form-group">
                         <label>Title</label>
