@@ -3,8 +3,6 @@ import axios from 'axios';
 import './ToDoList.css';
 import Spinner from '../Spinner/Spinner';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AddToDo from '../AddToDo/AddToDo';
-import { Route } from 'react-router-dom';
 
 class ToDoList extends Component {
 
@@ -108,8 +106,6 @@ class ToDoList extends Component {
         return(
             <div>
                 {body}
-                {/* <AddToDo show={this.state.showForm} close={this.closeFormHandler} onAdd = { this.onAddHandler }/> */}
-                <Route path="/newToDo" component={ () => <AddToDo show={this.state.showForm} close={this.closeFormHandler} onAdd = { this.onAddHandler }/> } />
             </div>
         );
     }
