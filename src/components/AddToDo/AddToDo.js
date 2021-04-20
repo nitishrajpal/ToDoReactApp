@@ -52,7 +52,6 @@ class AddToDo extends Component {
         }
         return(
             <div>
-                {successMessage}
                 <form onSubmit={this.onSubmitHandler}>
                     <div className="form-group">
                         <label>Title</label>
@@ -67,6 +66,7 @@ class AddToDo extends Component {
                     </div>
                     <button type="submit" id="submitForm" className="form-control btn btn-primary">Add</button>
                 </form>
+                {successMessage}
             </div>
         );
     }
